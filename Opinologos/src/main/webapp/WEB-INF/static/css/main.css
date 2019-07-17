@@ -1,0 +1,51 @@
+@charset "ISO-8859-1";
+.hello-title{
+    color: darkgreen;
+    
+}
+
+a.boton{
+  border-radius: 5px;
+  padding: 10px 7px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #666666;
+  margin: 5px;
+}
+
+a.danger{
+  border-radius: 5px;
+  padding: 10px 7px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #FA6D64;
+  margin: 5px;
+}
+
+a.warning{
+  border-radius: 5px;
+  padding: 10px 7px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #FCFC77;
+  margin: 5px;
+}
+
+a.blue{
+  border-radius: 5px;
+  padding: 10px 7px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #77C3FC;
+  margin: 5px;
+}
+
+a.green{
+  border-radius: 5px;
+  padding: 10px 7px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #24FB3E;
+  margin: 5px;
+}
+
