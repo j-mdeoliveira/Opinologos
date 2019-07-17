@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
+import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
 import com.accenture.opinologos2.opinologos2.repository.RolRepository;
 import com.accenture.opinologos2.opinologos2.repository.UserRepository;
 import com.accenture.opinologos2.opinologos2.service.UserService;
 import com.accenture.opinologos2.opinologos2.service.RolService.TipoRol;
+import com.accenture.opinologos2.opinologos2.model.Opinion;
 import com.accenture.opinologos2.opinologos2.model.Rol;
 import com.accenture.opinologos2.opinologos2.model.User;
 
@@ -36,6 +40,9 @@ public class SignUpController {
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
 
+	@Autowired
+	private OpinionRepository oRepo;
+	
 	@GetMapping("/login")
 	public String loginPage(Model model, String error, String logout) {
 		if (logout != null) {
@@ -81,13 +88,11 @@ public class SignUpController {
 			if (userNick == null) {
 
 				if (userMail == null) {
-					System.out.println(1);
 					String encryptPass = passEncoder.encode(password);
 					userP = new User(name, userName, mail, encryptPass);
 					userP.getRoles().add(TipoRol.SOCIO.getRol());
 				
 					usuarioService.save(userP);
-					System.out.println(4);
 
 				} else {
 					mailIguales = true;
@@ -115,5 +120,53 @@ public class SignUpController {
 	public String helloPage(WebRequest request, Model model) {
 
 		return "hello";
+	}
+	
+	@GetMapping("/home")
+	public String homePage(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		User user = getLoggedUser();
+		if(user != null) {
+			model.addAttribute("usuarioLogueado",user);
+		}
+		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
+//		System.out.println(user.getMail());
+		model.addAttribute("opiniones",user.getMail());
+		
+		
+		return "home";
+	}
+	
+	@GetMapping("/opinar")
+	public String opinPage() {
+		return "opinar";
+	}
+	
+	@PostMapping("/opinar")
+	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
+		System.out.println(titulo +" "+ detalle);
+		
+		Opinion opinion = new Opinion();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		User user;
+		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
+		
+		
+		opinion.setTitulo(titulo);
+		opinion.setDetalle(detalle);
+		opinion.setUser(user);
+		oRepo.save(opinion);
+		return "redirect:/home";
+	}
+	
+	public User getLoggedUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		if(currentPrincipalName != null) {
+			return userRepository.findByUserNameIgnoreCase(currentPrincipalName);
+		}
+		return null;
 	}
 }

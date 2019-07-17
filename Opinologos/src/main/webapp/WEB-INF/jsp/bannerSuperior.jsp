@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<html>
-<head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<title>Getting Started: Serving Web Content</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="/static/css/main.css" rel="stylesheet">
-</head>
-<body>
-<div id = "a" align="right" class="card">
-    <a class="blue" href="/login">Log in</a>
-    <a class="blue" href="/signup">Sign up</a>
-    <a class="green" href="/opinar">Crear Opinion</a>
-    <a class="green" href="/opiniones">Mis opiniones</a>    
-    <a class="warning" href="/busqueda">Buscar Usuarios</a>
-    <a class="danger" href="/perfil">Modificar Perfil</a>
-    <a class="danger" href="/hello">Log out</a>
+user: ${usuarioLogueado.userName}<br>
+Mis perfiles: 
+	<c:forEach items="${usuarioLogueado.roles}" var="rol">
+		${rol} -
+   </c:forEach>
+
+<div align= "right" class="container">
+	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  		<div   class="btn-group mr-2" role="group" aria-label="First group">
+    	<a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Log in</a>
+		<a href="/signup" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign up</a>
+		<a href="/opinar" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opinar</a>
+		<a href="/opiniones" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opiniones</a>
+    	<a href="/usuarios" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Usuarios</a>
+		<a href="/profile" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Perfil</a>
+    	<a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Log out</a>
+    	</div>
+    	
+    	
+	</div>
 </div>
-		</body>
-</html>
