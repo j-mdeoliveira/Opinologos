@@ -12,6 +12,7 @@
 <form action="/opinar" method="post">
   <div class="form-group">
     <label for="exampleFormControlInput1">Título</label>
+
     <input type="text" class="form-control" id="titulo"  name= "titulo" placeholder="piensa en un buen título">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   </div>

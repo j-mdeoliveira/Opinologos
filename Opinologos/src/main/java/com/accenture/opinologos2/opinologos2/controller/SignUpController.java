@@ -1,9 +1,8 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
-import java.security.Principal;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +19,7 @@ import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
 import com.accenture.opinologos2.opinologos2.repository.RolRepository;
 import com.accenture.opinologos2.opinologos2.repository.UserRepository;
 import com.accenture.opinologos2.opinologos2.service.UserService;
+import com.accenture.opinologos2.opinologos2.service.OpinionService;
 import com.accenture.opinologos2.opinologos2.service.RolService.TipoRol;
 import com.accenture.opinologos2.opinologos2.model.Opinion;
 import com.accenture.opinologos2.opinologos2.model.Rol;
@@ -36,6 +36,9 @@ public class SignUpController {
 
 	@Autowired
 	private UserService usuarioService;
+	
+	@Autowired
+	private OpinionService OpinionService;
 
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
@@ -147,17 +150,22 @@ public class SignUpController {
 	
 	@PostMapping("/opinar")
 	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
+		System.out.println(titulo +" "+ detalle);
+		Date fechaActual = new Date();
 		System.out.println("1");
 		Opinion opinion = new Opinion();
 		User user = new User();
 		user = getLoggedUser();
 		System.out.println(user);
+		
 		if (user != null) {
 			opinion.setTitulo(titulo);
-			opinion.setDetalle(detalle);
-			opinion.setUser(user);
-			oRepo.save(opinion);
-			return "redirect:/home";
+		  opinion.setDetalle(detalle);
+		  opinion.setUser(user);
+		  opinion.setBlockeada(false);
+		  opinion.setFechaCreacion(fechaActual);
+		  oRepo.save(opinion);
+		return "redirect:/home";
 		} else {
 			return "error";
 		}

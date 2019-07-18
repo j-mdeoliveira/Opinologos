@@ -20,8 +20,7 @@
 
 
 <c:if test="${logueado}">
-
-	<div align="right" class="container d-flex flex-row-reverse">
+  <div align="right" class="container d-flex flex-row-reverse">
 		<div class="btn-toolbar" role="toolbar"
 			aria-label="Toolbar with button groups">
 			<div align="right" class="btn-group mr-2" role="group"
