@@ -33,8 +33,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/static/**", "/*").permitAll()
         .anyRequest().authenticated()
         .and()
-        .formLogin().loginPage("/login").permitAll().and()
+        .formLogin()
+        .loginPage("/login")
+        .permitAll()
+        .defaultSuccessUrl("/home")
+        .and()
         .logout()
+        .logoutUrl("logout/funny")
+        .logoutSuccessUrl("/login")
             .permitAll();
 	}
 	

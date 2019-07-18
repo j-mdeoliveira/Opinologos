@@ -1,5 +1,8 @@
 package com.accenture.opinologos2.opinologos2.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +19,9 @@ public class Opinion {
 	private String detalle;
 	private String imagen;
 	private Long reacciones;
+	
+	private Boolean blockeada;
+	private Date fechaCreacion;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_user")
@@ -69,5 +75,23 @@ public class Opinion {
 		this.user = user;
 	}
 	
+	
+	public Boolean getBlockeada() {
+		return blockeada;
+	}
+
+	public void setBlockeada(Boolean blockeada) {
+		this.blockeada = blockeada;
+	}
+	
+	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
 
 }
