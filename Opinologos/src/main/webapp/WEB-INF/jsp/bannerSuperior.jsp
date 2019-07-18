@@ -18,23 +18,43 @@ Mis perfiles:
 
 
 <c:if test="${logueado}">
-<div align= "right" class="container">
-	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-  		<div   class="btn-group mr-2" role="group" aria-label="First group">
-    	<a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Log in</a>
-		<a href="/signup" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign up</a>
-		<a href="/opinar" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opinar</a>
-		<a href="/opiniones" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opiniones</a>
-    <c:if test="${adminValidator}" /><a href="/usuarios" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Usuarios</a>
-    
-		<a href="/profile" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Perfil</a>
-    	<a href=<c:url value="/logout" /> class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Logout</a>
-    	</div>
-    	
-    	
-	</div>
-</div>
 
+	<div align="right" class="container d-flex flex-row-reverse">
+		<div class="btn-toolbar" role="toolbar"
+			aria-label="Toolbar with button groups">
+			<div align="right" class="btn-group mr-2" role="group"
+				aria-label="First group">
+				<div>
+					<a href="/opinar" class="btn btn-danger btn-lg active"
+						role="button" aria-pressed="true">Opinar</a>
+				</div>
+				<div>
+					<a href="/opiniones" class="btn btn-danger btn-lg active"
+						role="button" aria-pressed="true">Opiniones</a>
+				</div>
+				<div>
+					<c:if test="${adminValidator}">
+						<a href="/usuarios" class="btn btn-warning btn-lg active"
+							role="button" aria-pressed="true">Usuarios</a>
+					</c:if>
+				</div>
+				<div>
+					<a href="/profile" class="btn btn-warning btn-lg active"
+						role="button" aria-pressed="true">Perfil</a>
+				</div>
+				<div>
+					<form action=<c:url value="/logout" /> method="POST">
+						<button type="submit" class="btn btn-secondary btn-lg active"
+							name="Logout" role="button" aria-pressed="true">Logout</button>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </c:if>
+
+
 
 

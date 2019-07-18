@@ -134,6 +134,8 @@ public class SignUpController {
 	@GetMapping("/home")
 	public String homePage(Model model) {
 		User user = getLoggedUser();
+		List<Opinion> opiniones = oRepo.findAll();
+		
 		if(user != null) {	
 			boolean log = true;
 			model.addAttribute("logueado", log);
@@ -142,42 +144,40 @@ public class SignUpController {
 			model.addAttribute("adminValidator",isAdmin);
 			
 		}
-		
-		
-		model.addAttribute("opiniones",user.getOpiniones());
-		
+		model.addAttribute("todaVaina", opiniones);
 		
 		return "home";
 	}
 	
 	@GetMapping("/opinar")
 	public String opinPage() {
-		return "opinar";
+		User user = new User();
+		user = getLoggedUser();
+		if (user != null) {
+			return "opinar";
+		} else {
+			return "error";
+		}
 	}
 	
 	@PostMapping("/opinar")
 	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
-		System.out.println(titulo +" "+ detalle);
-		
+		System.out.println("1");
 		Opinion opinion = new Opinion();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		User user;
-		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
-		
-		
-		opinion.setTitulo(titulo);
-		opinion.setDetalle(detalle);
-		opinion.setUser(user);
-		oRepo.save(opinion);
-		return "redirect:/home";
+		User user = new User();
+		user = getLoggedUser();
+		System.out.println(user);
+		if (user != null) {
+			opinion.setTitulo(titulo);
+			opinion.setDetalle(detalle);
+			opinion.setUser(user);
+			oRepo.save(opinion);
+			return "redirect:/home";
+		} else {
+			return "error";
+		}
 	}
 	
-//	@GetMapping("/logout")
-//	public String logout() {
-//		return "redirect:/hello";
-//	}
-//	
 	public User getLoggedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();

@@ -36,8 +36,9 @@
 
 
 ${opiniones}
-<c:forEach items="${usuarioLogueado.opiniones}" var="opi">
+
 <div class="container row">
+<c:forEach items="${todaVaina}" var="opi">
 	<div class="card col-3" style="width: 18rem;">
   	<img src="..." class="card-img-top" alt="...">
   		<div class="card-body">
@@ -46,8 +47,9 @@ ${opiniones}
     		<a href="#" class="btn btn-primary">Go somewhere</a>
   		</div>
 	</div>
+</c:forEach>	
 </div>
 		
-   </c:forEach>
+   
 </body>
 </html>
