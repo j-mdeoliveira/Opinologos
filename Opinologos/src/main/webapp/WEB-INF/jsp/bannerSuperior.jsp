@@ -4,7 +4,7 @@
 user: ${usuarioLogueado.userName}<br>
 Mis perfiles: 
 	<c:forEach items="${usuarioLogueado.roles}" var="rol">
-		${rol} -
+		${rol.role} -
    </c:forEach>
 
 <div align= "right" class="container">

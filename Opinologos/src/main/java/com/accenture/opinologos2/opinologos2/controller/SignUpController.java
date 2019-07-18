@@ -118,7 +118,7 @@ public class SignUpController {
 
 	@GetMapping({ "/hello", "/" })
 	public String helloPage(WebRequest request, Model model) {
-
+		model.addAttribute("usuarioLogueado", getLoggedUser());
 		return "hello";
 	}
 	

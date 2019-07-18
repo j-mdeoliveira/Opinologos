@@ -25,22 +25,7 @@ public class RolService {
 		public void setRol(Rol rol) {
 			this.rol=rol;
 		}
-	}
-	
-	@PostConstruct
-	private void loadRoles() {
-		for(TipoRol tipoRol : TipoRol.values()) {
-			if(tipoRol.getRol()==null) {
-				Rol rol = findByRole(tipoRol.name());
-				if(rol == null) {
-					rol = new Rol();
-					rol.setRole(tipoRol.name());
-					rol = save(rol);
-				}
-				tipoRol.setRol(rol);
-			}
-		}
-	}
+	}	
 	
 	@Autowired
 	private RolRepository rolDAO;

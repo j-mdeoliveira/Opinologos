@@ -24,6 +24,11 @@ public class UserService {
 			userRepo.save(s);
 		}
 		
+		public User saveAndEncrypt(User s) {
+			s.setPassword(passEncoder.encode(s.getPassword()));
+			return userRepo.save(s);
+		}
+		
 		public List<User> findAll(){
 			return userRepo.findAll();
 		}
