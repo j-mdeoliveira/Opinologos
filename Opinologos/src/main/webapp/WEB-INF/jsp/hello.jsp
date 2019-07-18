@@ -11,6 +11,7 @@
 <body>
 
 user: ${pageContext.request.userPrincipal.name}
+log: ${logueado}
 <br>
 <div class="container">
 <a href="/hello" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Homee!</a>

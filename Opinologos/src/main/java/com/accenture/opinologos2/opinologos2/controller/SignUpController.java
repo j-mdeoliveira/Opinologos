@@ -52,7 +52,6 @@ public class SignUpController {
 		if (error != null) {
 			System.out.println("Usuario o contraseña incorrectos"); // MOSTRAR ERROR AL USUARIO
 		}
-
 		return "login";// IR A PANTALLA DE LOGIN.JSP
 	}
 
@@ -118,21 +117,34 @@ public class SignUpController {
 
 	@GetMapping({ "/hello", "/" })
 	public String helloPage(WebRequest request, Model model) {
-		model.addAttribute("usuarioLogueado", getLoggedUser());
+		User user = getLoggedUser();
+
+
+		if(user != null) {
+			boolean log = true;
+			model.addAttribute("usuarioLogueado", getLoggedUser());
+			model.addAttribute("logueado", log);
+		} else {
+			boolean log = false;
+			model.addAttribute("logueado", log);
+		}
 		return "hello";
 	}
 	
 	@GetMapping("/home")
 	public String homePage(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
 		User user = getLoggedUser();
-		if(user != null) {
+		if(user != null) {	
+			boolean log = true;
+			model.addAttribute("logueado", log);
 			model.addAttribute("usuarioLogueado",user);
+			Boolean isAdmin = user.getRoles().contains(rolRepository.findByRole("ADMINISTRADOR"));
+			model.addAttribute("adminValidator",isAdmin);
+			
 		}
-		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
-//		System.out.println(user.getMail());
-		model.addAttribute("opiniones",user.getMail());
+		
+		
+		model.addAttribute("opiniones",user.getOpiniones());
 		
 		
 		return "home";
@@ -161,6 +173,11 @@ public class SignUpController {
 		return "redirect:/home";
 	}
 	
+//	@GetMapping("/logout")
+//	public String logout() {
+//		return "redirect:/hello";
+//	}
+//	
 	public User getLoggedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
