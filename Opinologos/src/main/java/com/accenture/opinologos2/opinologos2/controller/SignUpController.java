@@ -115,23 +115,8 @@ public class SignUpController {
 		return "redirect:/login";
 	}
 
-	@GetMapping({ "/hello", "/" })
-	public String helloPage(WebRequest request, Model model) {
-		User user = getLoggedUser();
-
-
-		if(user != null) {
-			boolean log = true;
-			model.addAttribute("usuarioLogueado", getLoggedUser());
-			model.addAttribute("logueado", log);
-		} else {
-			boolean log = false;
-			model.addAttribute("logueado", log);
-		}
-		return "hello";
-	}
-	
-	@GetMapping("/home")
+		
+	@GetMapping({"/home","/"})
 	public String homePage(Model model) {
 		User user = getLoggedUser();
 		List<Opinion> opiniones = oRepo.findAll();
@@ -156,7 +141,7 @@ public class SignUpController {
 		if (user != null) {
 			return "opinar";
 		} else {
-			return "error";
+			return "login";
 		}
 	}
 	

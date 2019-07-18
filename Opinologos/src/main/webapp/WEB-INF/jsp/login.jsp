@@ -11,11 +11,9 @@
 </head>
 
 <body>
+<jsp:include page="navbar.jsp"></jsp:include><br>
 <br>
-<div class="container">
-<a href="/hello" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Homee!</a>
-</div>
-<br>
+
 <jsp:include page="bannerSuperior.jsp"></jsp:include>
 
 <br>
