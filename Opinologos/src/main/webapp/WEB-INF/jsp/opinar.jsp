@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-user: ${pageContext.request.userPrincipal.name}
+<jsp:include page="navbar.jsp"></jsp:include><br>
+<br>
 <form action="/opinar" method="post">
   <div class="form-group">
     <label for="exampleFormControlInput1">Título</label>

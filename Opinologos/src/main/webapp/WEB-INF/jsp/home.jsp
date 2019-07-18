@@ -11,9 +11,10 @@
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-
-
-<jsp:include page="bannerSuperior.jsp"></jsp:include>
+<jsp:include page="navbar.jsp"></jsp:include><br>
+<br>
+<jsp:include page="bannerSuperior.jsp"></jsp:include><br>
+<br>
 
 <%-- <c:if test="${adminValidator}"> --%>
 <!-- <div align= "right" class="container"> -->
@@ -36,18 +37,21 @@
 
 
 ${opiniones}
-<c:forEach items="${usuarioLogueado.opiniones}" var="opi">
+
 <div class="container row">
+<c:forEach items="${todaVaina}" var="opi">
 	<div class="card col-3" style="width: 18rem;">
   	<img src="..." class="card-img-top" alt="...">
   		<div class="card-body">
-    		<h5 class="card-title">${opi.titulo} </h5>
+    		<h3 class="card-title">${opi.titulo} </h3>
+    		<h5>${opi.user.userName}</h5>
     		<p class="card-text">${opi.detalle} </p>
     		<a href="#" class="btn btn-primary">Go somewhere</a>
   		</div>
 	</div>
+</c:forEach>	
 </div>
 		
-   </c:forEach>
+   
 </body>
 </html>

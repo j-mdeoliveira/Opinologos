@@ -118,23 +118,8 @@ public class SignUpController {
 		return "redirect:/login";
 	}
 
-	@GetMapping({ "/hello", "/" })
-	public String helloPage(WebRequest request, Model model) {
-		User user = getLoggedUser();
-
-
-		if(user != null) {
-			boolean log = true;
-			model.addAttribute("usuarioLogueado", getLoggedUser());
-			model.addAttribute("logueado", log);
-		} else {
-			boolean log = false;
-			model.addAttribute("logueado", log);
-		}
-		return "hello";
-	}
-	
-	@GetMapping("/home")
+		
+	@GetMapping({"/home","/"})
 	public String homePage(Model model) {
 		User user = getLoggedUser();
 		List<Opinion> opiniones = oRepo.findAll();
@@ -154,13 +139,20 @@ public class SignUpController {
 	
 	@GetMapping("/opinar")
 	public String opinPage() {
-		return "opinar";
+		User user = new User();
+		user = getLoggedUser();
+		if (user != null) {
+			return "opinar";
+		} else {
+			return "login";
+		}
 	}
 	
 	@PostMapping("/opinar")
 	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
 		System.out.println(titulo +" "+ detalle);
 		Date fechaActual = new Date();
+		System.out.println("1");
 		Opinion opinion = new Opinion();
 		User user = new User();
 		user = getLoggedUser();
@@ -168,24 +160,17 @@ public class SignUpController {
 		
 		if (user != null) {
 			opinion.setTitulo(titulo);
-		opinion.setDetalle(detalle);
-		opinion.setUser(user);
-		opinion.setBlockeada(false);
-		opinion.setFechaCreacion(fechaActual);
-		oRepo.save(opinion);
+		  opinion.setDetalle(detalle);
+		  opinion.setUser(user);
+		  opinion.setBlockeada(false);
+		  opinion.setFechaCreacion(fechaActual);
+		  oRepo.save(opinion);
 		return "redirect:/home";
 		} else {
 			return "error";
 		}
-		
-		
 	}
 	
-//	@GetMapping("/logout")
-//	public String logout() {
-//		return "redirect:/hello";
-//	}
-//	
 	public User getLoggedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
