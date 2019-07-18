@@ -1,10 +1,8 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -57,7 +55,6 @@ public class SignUpController {
 		if (error != null) {
 			System.out.println("Usuario o contraseña incorrectos"); // MOSTRAR ERROR AL USUARIO
 		}
-
 		return "login";// IR A PANTALLA DE LOGIN.JSP
 	}
 
@@ -123,23 +120,34 @@ public class SignUpController {
 
 	@GetMapping({ "/hello", "/" })
 	public String helloPage(WebRequest request, Model model) {
-		model.addAttribute("usuarioLogueado", getLoggedUser());
+		User user = getLoggedUser();
+
+
+		if(user != null) {
+			boolean log = true;
+			model.addAttribute("usuarioLogueado", getLoggedUser());
+			model.addAttribute("logueado", log);
+		} else {
+			boolean log = false;
+			model.addAttribute("logueado", log);
+		}
 		return "hello";
 	}
 	
 	@GetMapping("/home")
 	public String homePage(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
 		User user = getLoggedUser();
-		if(user != null) {
-			model.addAttribute("usuarioLogueado",user);
-//			model.addAttribute("opninionesTodas", oRepo.findAll());
-		}
-		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
-		System.out.println(user.getMail());
-		model.addAttribute("opiniones",user.getMail());
+		List<Opinion> opiniones = oRepo.findAll();
 		
+		if(user != null) {	
+			boolean log = true;
+			model.addAttribute("logueado", log);
+			model.addAttribute("usuarioLogueado",user);
+			Boolean isAdmin = user.getRoles().contains(rolRepository.findByRole("ADMINISTRADOR"));
+			model.addAttribute("adminValidator",isAdmin);
+			
+		}
+		model.addAttribute("todaVaina", opiniones);
 		
 		return "home";
 	}
@@ -154,21 +162,30 @@ public class SignUpController {
 		System.out.println(titulo +" "+ detalle);
 		Date fechaActual = new Date();
 		Opinion opinion = new Opinion();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		User user;
-		user = userRepository.findByUserNameIgnoreCase(currentPrincipalName);
+		User user = new User();
+		user = getLoggedUser();
+		System.out.println(user);
 		
-		
-		opinion.setTitulo(titulo);
+		if (user != null) {
+			opinion.setTitulo(titulo);
 		opinion.setDetalle(detalle);
 		opinion.setUser(user);
 		opinion.setBlockeada(false);
 		opinion.setFechaCreacion(fechaActual);
 		oRepo.save(opinion);
 		return "redirect:/home";
+		} else {
+			return "error";
+		}
+		
+		
 	}
 	
+//	@GetMapping("/logout")
+//	public String logout() {
+//		return "redirect:/hello";
+//	}
+//	
 	public User getLoggedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();

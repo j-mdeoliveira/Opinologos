@@ -8,86 +8,37 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link href="/static/css/main.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <style type="text/css">
-.card {
-	/* Add shadows to create the "card" effect */
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	transition: 0.3s;
-}
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-/* Add some padding inside the card container */
-.container {
-	padding: 2px 16px;
-}
-
-.ec-stars-wrapper {
-	/* Espacio entre los inline-block (los hijos, los `a`) 
-	   http://ksesocss.blogspot.com/2012/03/display-inline-block-y-sus-empeno-en.html */
-	font-size: 0;
-	/* Podríamos quitarlo, 
-		pero de esta manera (siempre que no le demos padding), 
-		sólo aplicará la regla .ec-stars-wrapper:hover a cuando
-		también se esté haciendo hover a alguna estrella */
-	display: inline-block;
-}
-.ec-stars-wrapper a {
-	text-decoration: none;
-	display: inline-block;
-	/* Volver a dar tamaño al texto */
-	font-size: 32px;
-	font-size: 2rem;
-	
-	color: #888;
-}
-
-.ec-stars-wrapper:hover a {
-	color: rgb(39, 130, 228);
-}
-/*
- * El selector de hijo, es necesario para aumentar la especifidad
- */
-.ec-stars-wrapper > a:hover ~ a {
-	color: #888;
-}
 </style>
 </head>
 <body>
 
-	<div class="card" method="get" action="/opiniones" style="width: 50%">
+	<div class="container row">
 		<c:forEach items="${userLogueado.opiniones}" var="op">
-			<img src="https://www.w3schools.com/howto/img_avatar2.png"
-				alt="Avatar" style="width: 100%">
-			<div class="container">
-				<h4>
-					<b>${op.titulo}</b>
-					<b> - </b>
-					<b>${op.fechaCreacion}</b>
-				</h4>
-				<p>${op.detalle}</p>
-				<button type="submit" class="btn btn-block btn-primary"
-					class="form-submit">MG</button>
-			</div>
-			
-			<c:if test="${op.blockeada}">
-				${op.id}
-    			<a href="/edicionopinion" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Editar Opinion</a>
-			</c:if>
-			
+			<div class="card col-3" method="get" action="/opiniones">
+					<img src="https://www.w3schools.com/howto/img_avatar2.png" class="center" height=100 width=100 >
+  				<div class="card-body">
+    				<h5 class="card-title">
+    					<b>${op.titulo}</b>
+						<b> - </b>
+						<b>${op.fechaCreacion}</b>
+					</h5>
+    				<p class="card-text">${op.detalle} </p>
+    				<p class="card-text">${op.user.userName} </p>
+
+					<button type="submit" class="btn btn-block btn-primary" class="form-submit">MG</button>    				
+					<c:if test="${op.blockeada}">
+						${op.id}						
+    					<a href="/edicionopinion" class="btn btn-block btn-primary" role="button" aria-pressed="true">Editar Opinion</a>
+					</c:if>    				
+  				</div>
+  			</div>
 		</c:forEach>
-
 	</div>
-
-	<script>
-		/* When the user clicks on the button, 
-		 toggle between hiding and showing the dropdown content */
-		function myFunction() {
-			document.getElementById("myDropdown").classList.toggle("show");
-		}
-	</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

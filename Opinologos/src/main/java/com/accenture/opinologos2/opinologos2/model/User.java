@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.transaction.Transactional;
 
 @Entity
 public class User {
@@ -28,6 +29,9 @@ public class User {
 	private String mail;
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+//	@Transactional
+//	private int vecesPuntuadas;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

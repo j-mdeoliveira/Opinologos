@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.accenture.opinologos2.opinologos2.model.Opinion;
-import com.accenture.opinologos2.opinologos2.model.Rol;
 import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
 
 @Service

@@ -93,12 +93,5 @@ public class Opinion {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	@Override
-	public String toString() {
-		return "Opinion [id=" + id + ", titulo=" + titulo + ", detalle=" + detalle + ", imagen=" + imagen
-				+ ", reacciones=" + reacciones + "]";
-	}
-	
-	
 
 }
