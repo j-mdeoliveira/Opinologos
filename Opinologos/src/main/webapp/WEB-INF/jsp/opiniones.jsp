@@ -14,7 +14,8 @@
 </style>
 </head>
 <body>
-
+<jsp:include page="navbar.jsp"></jsp:include><br>
+<br>
 	<div class="container row">
 		<c:forEach items="${userLogueado.opiniones}" var="op">
 			<div class="card col-3" method="get" action="/opiniones">
