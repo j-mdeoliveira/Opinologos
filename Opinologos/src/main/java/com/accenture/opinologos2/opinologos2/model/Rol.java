@@ -40,6 +40,7 @@ public class Rol {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	
 	
 	

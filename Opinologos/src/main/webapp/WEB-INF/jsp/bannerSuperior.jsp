@@ -15,8 +15,8 @@ Mis perfiles:
 		<a href="/opinar" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opinar</a>
 		<a href="/opiniones" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Opiniones</a>
     	<a href="/usuarios" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Usuarios</a>
-		<a href="/profile" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Perfil</a>
-    	<a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Log out</a>
+		<a href="/profile" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Perfil</a>  	
+    	<a href="/logout" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Log out</a>
     	</div>
     	
     	
