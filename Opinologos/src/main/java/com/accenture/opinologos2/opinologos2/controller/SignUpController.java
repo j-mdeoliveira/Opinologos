@@ -1,8 +1,6 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
-import java.util.Date;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,15 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
-import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
-import com.accenture.opinologos2.opinologos2.repository.RolRepository;
-import com.accenture.opinologos2.opinologos2.repository.UserRepository;
-import com.accenture.opinologos2.opinologos2.service.UserService;
-import com.accenture.opinologos2.opinologos2.service.OpinionService;
-import com.accenture.opinologos2.opinologos2.service.RolService.TipoRol;
 import com.accenture.opinologos2.opinologos2.model.Opinion;
 import com.accenture.opinologos2.opinologos2.model.Rol;
 import com.accenture.opinologos2.opinologos2.model.User;
+import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
+import com.accenture.opinologos2.opinologos2.repository.RolRepository;
+import com.accenture.opinologos2.opinologos2.repository.UserRepository;
+import com.accenture.opinologos2.opinologos2.service.OpinionService;
+import com.accenture.opinologos2.opinologos2.service.RolService.TipoRol;
+import com.accenture.opinologos2.opinologos2.service.UserService;
 
 @Controller
 public class SignUpController {
@@ -135,40 +133,6 @@ public class SignUpController {
 		model.addAttribute("todaVaina", opiniones);
 		
 		return "home";
-	}
-	
-	@GetMapping("/opinar")
-	public String opinPage() {
-		User user = new User();
-		user = getLoggedUser();
-		if (user != null) {
-			return "opinar";
-		} else {
-			return "login";
-		}
-	}
-	
-	@PostMapping("/opinar")
-	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
-		System.out.println(titulo +" "+ detalle);
-		Date fechaActual = new Date();
-		System.out.println("1");
-		Opinion opinion = new Opinion();
-		User user = new User();
-		user = getLoggedUser();
-		System.out.println(user);
-		
-		if (user != null) {
-			opinion.setTitulo(titulo);
-		  opinion.setDetalle(detalle);
-		  opinion.setUser(user);
-		  opinion.setBlockeada(false);
-		  opinion.setFechaCreacion(fechaActual);
-		  oRepo.save(opinion);
-		return "redirect:/home";
-		} else {
-			return "error";
-		}
 	}
 	
 	public User getLoggedUser() {

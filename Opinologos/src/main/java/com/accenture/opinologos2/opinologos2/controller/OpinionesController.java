@@ -1,6 +1,6 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,9 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.opinologos2.opinologos2.model.Opinion;
 import com.accenture.opinologos2.opinologos2.model.User;
@@ -32,6 +31,36 @@ public class OpinionesController {
 	@Autowired
 	private OpinionService opService;
 	
+	@Autowired
+	private OpinionRepository oRepo;
+
+	@GetMapping("/opinar")
+	public String opinPage() {
+		return "opinar";
+	}
+	
+	@PostMapping("/opinar")
+	public String opinionPage(Model model, @RequestParam String titulo, @RequestParam String detalle){
+		System.out.println(titulo +" "+ detalle);
+		Date fechaActual = new Date();
+		Opinion opinion = new Opinion();
+		User user = new User();
+		user = getLoggedUser();
+		System.out.println(user);
+		
+		if (user != null) {
+			opinion.setTitulo(titulo);
+			opinion.setDetalle(detalle);
+			opinion.setUser(user);
+			opinion.setBlockeada(false);
+			opinion.setFechaCreacion(fechaActual);
+			oRepo.save(opinion);
+		return "redirect:/home";
+		} else {
+			return "error";
+		}
+	
+	}
 	
 	@GetMapping("/opiniones")
 	public String getOpiniones(Model model) {
