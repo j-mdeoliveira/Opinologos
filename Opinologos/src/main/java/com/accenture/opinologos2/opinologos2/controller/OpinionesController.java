@@ -1,6 +1,7 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -67,12 +68,24 @@ public class OpinionesController {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
-		
 		User user = getLoggedUser();
-		model.addAttribute("userLogueado",user);
+		Float puntuacion;
 		
-//		System.out.println(user.getName()+" "+user.getOpiniones());
-		return "opiniones";
+		if(user!=null) {
+			boolean log = true;
+			model.addAttribute("logueado", log);
+			model.addAttribute("userLogueado",user);
+			System.out.println(user.getName()+" "+user.getOpiniones());
+			for (Opinion op : user.getOpiniones()) {
+				puntuacion = this.getPuntuacion(op.getPuntuaciones());
+				model.addAttribute("puntuacion", puntuacion);
+			}
+			
+			return "opiniones";
+
+		} else {
+			return "redirect:/login";
+		}
 		
 	}
 	
@@ -88,6 +101,41 @@ public class OpinionesController {
 		return "";
 	} 
 	
+	@PostMapping("/puntuar")
+	public String homePost(Model model, @RequestParam("idOpinion") Long idOpinion, @RequestParam("rating") Integer rating) {
+		User user = getLoggedUser();
+		List<Opinion> opiniones = oRepo.findAll();
+		Opinion opinion = oRepo.findById(idOpinion).get();
+		 
+		//TODO agregarle la puntuacion a la opinion
+		if(user != null) {	
+			boolean log = true;
+			model.addAttribute("logueado", log);
+			model.addAttribute("usuarioLogueado",user);
+			//Boolean isAdmin = user.getRoles().contains(rolRepository.findByRole("ADMINISTRADOR"));
+			//model.addAttribute("adminValidator",isAdmin);
+			System.out.println(opinion.getTitulo());
+			opinion.setPuntuaciones(rating);
+			
+		}
+		model.addAttribute("todaVaina", opiniones);
+		
+		return "home";
+	}
+	
+	private Float getPuntuacion(List<Float> puntuaciones) {
+		Float porce;
+		Float base = 0f;
+		
+		for (Float puntuacion : puntuaciones) {
+			base += puntuacion;
+		}
+		
+		porce = base/puntuaciones.size();
+		
+		return porce;
+		
+	}
 	
 	
 	public User getLoggedUser() {

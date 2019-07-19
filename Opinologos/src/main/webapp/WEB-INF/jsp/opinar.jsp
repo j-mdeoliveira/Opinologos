@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +11,11 @@
 <body>
 <jsp:include page="navbar.jsp"></jsp:include><br>
 <br>
-<form action="/opinar" method="post">
+<form:form action="/opinar" method="post">
   <div class="form-group">
     <label for="exampleFormControlInput1">Título</label>
 
     <input type="text" class="form-control" id="titulo"  name= "titulo" placeholder="piensa en un buen título">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Reseña</label>
@@ -23,6 +24,6 @@
   <div class="col-sm-7">
 		<button type="submit" class="btn btn-block btn-primary" class="form-submit">Opinar</button>
   </div>
-</form>
+</form:form>
 </body>
 </html>

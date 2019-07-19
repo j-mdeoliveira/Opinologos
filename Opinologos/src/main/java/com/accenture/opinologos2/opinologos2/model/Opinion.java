@@ -1,6 +1,8 @@
 package com.accenture.opinologos2.opinologos2.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Opinion {
+	
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -19,6 +24,9 @@ public class Opinion {
 	private String detalle;
 	private String imagen;
 	private Long reacciones;
+	
+	private ArrayList<Float> puntuaciones = new ArrayList<Float>();
+	
 	
 	private Boolean blockeada;
 	private Date fechaCreacion;
@@ -93,5 +101,14 @@ public class Opinion {
 		this.fechaCreacion = fechaCreacion;
 	}
 
+	public ArrayList<Float> getPuntuaciones() {
+		
+		return puntuaciones;
+	}
 
+	public void setPuntuaciones(float puntuaciones) {
+		this.puntuaciones.add(puntuaciones);
+	}
+	
+	
 }

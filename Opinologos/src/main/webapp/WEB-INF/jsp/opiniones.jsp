@@ -9,17 +9,19 @@
 <title>Insert title here</title>
 <link href="/static/css/main.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<style type="text/css">
 
-</style>
 </head>
 <body>
 <jsp:include page="navbar.jsp"></jsp:include><br>
 <br>
+<jsp:include page="bannerSuperior.jsp"></jsp:include><br>
+<br>
 	<div class="container row">
 		<c:forEach items="${userLogueado.opiniones}" var="op">
 			<div class="card col-3" method="get" action="/opiniones">
+				<div align="center">
 					<img src="https://www.w3schools.com/howto/img_avatar2.png" class="center" height=100 width=100 >
+				</div>
   				<div class="card-body">
     				<h5 class="card-title">
     					<b>${op.titulo}</b>
@@ -27,7 +29,12 @@
 						<b>${op.fechaCreacion}</b>
 					</h5>
     				<p class="card-text">${op.detalle} </p>
-    				<p class="card-text">${op.user.userName} </p>
+    				<p class="card-text">Escrita por: ${op.user.userName} </p>
+    				<c:if test="${isNaN}">
+    					No tiene puntuacion todavia.
+    				</c:if>
+    				<p class="card-text">Puntuacion promedio: ${puntuacion} </p>
+    				
 
 					<button type="submit" class="btn btn-block btn-primary" class="form-submit">MG</button>    				
 					<c:if test="${op.blockeada}">
