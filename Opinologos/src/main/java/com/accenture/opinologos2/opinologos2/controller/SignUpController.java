@@ -51,8 +51,13 @@ public class SignUpController {
 		}
 
 		if (error != null) {
+			boolean err = true;
+			String msg = "Usuario o contraseña incorrectos";
+			model.addAttribute("noLog", msg);
+			model.addAttribute("error", err);
 			System.out.println("Usuario o contraseña incorrectos"); // MOSTRAR ERROR AL USUARIO
 		}
+		
 		return "login";// IR A PANTALLA DE LOGIN.JSP
 	}
 

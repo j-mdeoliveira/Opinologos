@@ -71,7 +71,7 @@ public class OpinionesController {
 		User user = getLoggedUser();
 		model.addAttribute("userLogueado",user);
 		
-		System.out.println(user.getName()+" "+user.getOpiniones());
+//		System.out.println(user.getName()+" "+user.getOpiniones());
 		return "opiniones";
 		
 	}

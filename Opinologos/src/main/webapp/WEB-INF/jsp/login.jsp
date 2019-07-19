@@ -8,6 +8,18 @@
 <title>OPINIOLOGOS</title>
  <link href="/static/css/main.css" rel="stylesheet">
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script type="text/javascript">
+
+	window.onload = validateForm;
+	
+	function validateForm(){
+		if(""!="${error}"){
+			alert("usuario o contraseña incorrectos");
+		return false;
+	}
+}
+</script>
+
 </head>
 
 <body>
@@ -28,9 +40,9 @@
 	</div>
 	
 </form>
-
-<c:if test="${validacion}">
-<p>${mensaje}!!!
+${error}
+<c:if test="${error}">
+<p>${noLog}!!!
 </c:if>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

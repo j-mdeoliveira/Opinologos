@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 
-<%-- user: ${usuarioLogueado.userName}<br> --%>
-<%-- esAdmin: ${adminValidator};  --%>
-<%-- log: ${logueado} --%>
-<!-- Mis perfiles:  -->
-<%-- 	<c:forEach items="${usuarioLogueado.roles}" var="rol"> --%>
-<%-- 		${rol.role} - --%>
-<%--    </c:forEach> --%>
+user: ${usuarioLogueado.userName}<br>
+esAdmin: ${adminValidator}; 
+log: ${logueado}
+Mis perfiles: 
+	<c:forEach items="${usuarioLogueado.roles}" var="rol">
+		${rol.role} -
+   </c:forEach>
 
 <c:if test="${!logueado}">
 	<div class="container d-flex flex-row-reverse">
@@ -35,7 +36,7 @@
 				</div>
 				<div>
 					<c:if test="${adminValidator}">
-						<a href="/usuarios" class="btn btn-warning btn-lg active"
+						<a href="/protected/users" class="btn btn-warning btn-lg active"
 							role="button" aria-pressed="true">Usuarios</a>
 					</c:if>
 				</div>
@@ -44,12 +45,10 @@
 						role="button" aria-pressed="true">Perfil</a>
 				</div>
 				<div>
-					<form action=<c:url value="/logout" /> method="POST">
+					<form:form action="/logout" method="POST">
 						<button type="submit" class="btn btn-secondary btn-lg active"
 							name="Logout" role="button" aria-pressed="true">Logout</button>
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>

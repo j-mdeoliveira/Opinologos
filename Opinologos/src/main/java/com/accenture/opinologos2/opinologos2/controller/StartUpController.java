@@ -45,7 +45,7 @@ public class StartUpController implements InitializingBean {
 	
 	private void crearAdmin() {
 		User admin = userService.findByNick(ADMIN_USER_NAME);
-		if(admin == null) {
+ 		if(admin == null) {
 			admin = new User(ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_USER_NAME, ADMIN_USER_NAME);
 			admin.getRoles().addAll(
 					Arrays.asList(

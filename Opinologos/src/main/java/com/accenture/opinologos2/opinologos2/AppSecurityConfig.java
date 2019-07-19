@@ -41,6 +41,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
         .logout()
         .logoutSuccessUrl("/login")
             .permitAll();
+//        .and().authorizeRequests()
+//        .antMatchers("/protected/**").access("hasRole('ADMINISTRADOR')").anyRequest().authenticated();
 	}
 	
 	@Bean
