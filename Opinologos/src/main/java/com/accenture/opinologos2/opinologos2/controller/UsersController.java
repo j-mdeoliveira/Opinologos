@@ -1,5 +1,6 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.opinologos2.opinologos2.model.User;
-import com.accenture.opinologos2.opinologos2.repository.UserRepository;
 import com.accenture.opinologos2.opinologos2.service.RolService;
 import com.accenture.opinologos2.opinologos2.service.UserService;
 

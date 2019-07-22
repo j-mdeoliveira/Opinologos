@@ -49,6 +49,10 @@ public class UserService {
 			
 		}
 		
+		public List<User> findByName(String name){
+			return userRepo.findByName(name);
+		}
+		
 		public User getLoggedUser() {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String currentPrincipalName = authentication.getName();
