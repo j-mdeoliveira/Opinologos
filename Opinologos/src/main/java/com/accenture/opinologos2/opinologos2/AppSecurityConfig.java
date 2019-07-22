@@ -40,7 +40,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
         .and()
         .logout()
         .logoutSuccessUrl("/login")
-            .permitAll();
+            .permitAll()
+            .and()
+            .exceptionHandling().accessDeniedPage("/accessDenied.jsp");
 //        .and().authorizeRequests()
 //        .antMatchers("/protected/**").access("hasRole('ADMINISTRADOR')").anyRequest().authenticated();
 	}
