@@ -45,27 +45,33 @@ ${opiniones}
 <div class="container row">
 <c:forEach items="${todaVaina}" var="opi">
 	<div class="card col-3" style="width: 18rem;">
-	  	<img src="..." class="card-img-top" alt="...">
-	  		<div class="card-body">
+	  	<img src="https://www.w3schools.com/howto/img_avatar2.png" class="card-img-top" alt="...">
+	  		<div class="card-body">		        
+	  		
 	    		<h3 class="card-title">${opi.titulo} </h3>
 	    		<h5>${opi.user.userName}</h5>
 	    		<p class="card-text">${opi.detalle} </p>
-	    		<p class="card-text">${opi.puntuaciones} </p>
-	    		<p class="card-text">${opi.id} </p>			
-	    			
-	    		 <div class="row">
-	                <p>Overall Rating</p>
-	                <span class="overallRatings"></span>
-	               	<select name="rating" id="rating" form="carform">
-	               		<c:forEach var="i" begin="1" end="10" step="1">
-	           				<option>${i}</option>
-			          	</c:forEach>
-					</select>
-	               	<input type="hidden" id="idOpinion" name="idOpinion" value="${opi.id}"/>
-	              </div>
-	    		<button type="submit" class="btn btn-block btn-primary" class="form-submit">Opinar</button>
-	    		<a href="/editarOpinion?idOpinion=${opi.id}"> Editar esta Opinion </a>  	     		
-	  		</div>
+	    		<p class="card-text">${opi.id} </p>
+
+					<div class="row">
+						<p>Overall Rating</p>
+						<span class="overallRatings"></span>
+
+						<form:form action="/puntuar" method="POST">
+							<select name="rating" id="rating" >
+								<c:forEach var="i" begin="1" end="10" step="1">
+									<option value="${i}">${i}</option>
+								</c:forEach>
+							</select>
+							<input type="hidden" id="idOpinion" name="idOpinion"
+								value="${opi.id}" />
+
+							<button type="submit" class="btn btn-block btn-primary"
+								class="form-submit">Puntuar</button>
+						</form:form>
+					</div>
+					<a href="/editarOpinion?idOpinion=${opi.id}"> Editar esta opinion </a>						
+				</div>
   		</div>
 	</c:forEach>
 </div>	

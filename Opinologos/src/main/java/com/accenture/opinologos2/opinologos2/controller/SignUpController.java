@@ -1,10 +1,6 @@
 package com.accenture.opinologos2.opinologos2.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
-import com.accenture.opinologos2.opinologos2.model.Opinion;
 import com.accenture.opinologos2.opinologos2.model.Rol;
 import com.accenture.opinologos2.opinologos2.model.User;
-import com.accenture.opinologos2.opinologos2.repository.OpinionRepository;
 import com.accenture.opinologos2.opinologos2.repository.RolRepository;
 import com.accenture.opinologos2.opinologos2.repository.UserRepository;
-import com.accenture.opinologos2.opinologos2.service.OpinionService;
 import com.accenture.opinologos2.opinologos2.service.RolService.TipoRol;
 import com.accenture.opinologos2.opinologos2.service.UserService;
 
@@ -28,42 +21,19 @@ public class SignUpController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private RolRepository rolRepository;
 
 	@Autowired
 	private UserService usuarioService;
-	
-	@Autowired
-	private OpinionService OpinionService;
 
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
 
-	@Autowired
-	private OpinionRepository oRepo;
-	
-	@GetMapping("/login")
-	public String loginPage(Model model, String error, String logout) {
-		if (logout != null) {
-			return "hello";
-		}
-
-		if (error != null) {
-			boolean err = true;
-			String msg = "Usuario o contraseña incorrectos";
-			model.addAttribute("noLog", msg);
-			model.addAttribute("error", err);
-			System.out.println("Usuario o contraseña incorrectos"); // MOSTRAR ERROR AL USUARIO
-		}
-		
-		return "login";// IR A PANTALLA DE LOGIN.JSP
-	}
-
 	@GetMapping("/signup")
 	public String signUpPage(WebRequest request, Model model) {
-		model.addAttribute("roles",rolRepository.findAll());
+		model.addAttribute("roles", rolRepository.findAll());
 		for (Rol rol : rolRepository.findAll()) {
 			System.out.println(rol.getRole());
 		}
@@ -87,7 +57,7 @@ public class SignUpController {
 		User userMail = userRepository.findByMail(mail);
 
 		User userP;
-		
+
 		if (password.equals(passAgain)) {
 
 			if (userNick == null) {
@@ -96,7 +66,7 @@ public class SignUpController {
 					String encryptPass = passEncoder.encode(password);
 					userP = new User(name, userName, mail, encryptPass);
 					userP.getRoles().add(TipoRol.SOCIO.getRol());
-				
+
 					usuarioService.save(userP);
 
 				} else {
@@ -117,35 +87,8 @@ public class SignUpController {
 			userModel.addAttribute("noIguales", noIguales);
 			return "signup";
 		}
-		
+
 		return "redirect:/login";
 	}
 
-		
-	@GetMapping({"/home","/"})
-	public String homePage(Model model) {
-		User user = getLoggedUser();
-		List<Opinion> opiniones = oRepo.findAll();
-		
-		if(user != null) {	
-			boolean log = true;
-			model.addAttribute("logueado", log);
-			model.addAttribute("usuarioLogueado",user);
-			Boolean isAdmin = user.getRoles().contains(rolRepository.findByRole("ADMINISTRADOR"));
-			model.addAttribute("adminValidator",isAdmin);
-			
-		}
-		model.addAttribute("todaVaina", opiniones);
-		
-		return "home";
-	}
-	
-	public User getLoggedUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		if(currentPrincipalName != null) {
-			return userRepository.findByUserNameIgnoreCase(currentPrincipalName);
-		}
-		return null;
-	}
 }

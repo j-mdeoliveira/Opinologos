@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 user: ${usuarioLogueado.userName}<br>
 esAdmin: ${adminValidator}; 
@@ -35,10 +36,10 @@ Mis perfiles:
 						role="button" aria-pressed="true">Opiniones</a>
 				</div>
 				<div>
-					<c:if test="${adminValidator}">
-						<a href="/protected/users" class="btn btn-warning btn-lg active"
+					 <sec:authorize access="hasAuthority('ADMINISTRADOR') or hasAuthority('MODERADOR')">
+					 <a href="/protected/users" class="btn btn-warning btn-lg active"
 							role="button" aria-pressed="true">Usuarios</a>
-					</c:if>
+   						</sec:authorize>
 				</div>
 				<div>
 					<a href="/profile" class="btn btn-warning btn-lg active"

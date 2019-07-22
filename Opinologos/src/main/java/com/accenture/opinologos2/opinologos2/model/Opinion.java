@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -23,14 +25,12 @@ public class Opinion {
 	private String titulo;
 	private String detalle;
 	private String imagen;
-	private Long reacciones;
-	
-	private ArrayList<Float> puntuaciones = new ArrayList<Float>();
-	
-	
+	private Float reacciones;
+	@OneToMany(cascade = CascadeType.ALL,
+			   mappedBy = "opinion")
+	private List<Reacciones> puntuaciones;
 	private Boolean blockeada;
 	private Date fechaCreacion;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_user")
 	private User user;
@@ -67,11 +67,11 @@ public class Opinion {
 		this.imagen = imagen;
 	}
 
-	public Long getReacciones() {
+	public Float getReacciones() {
 		return reacciones;
 	}
 
-	public void setReacciones(Long reacciones) {
+	public void setReacciones(Float reacciones) {
 		this.reacciones = reacciones;
 	}
 
@@ -93,6 +93,14 @@ public class Opinion {
 	}
 	
 	
+	public List<Reacciones> getPuntuaciones() {
+		return puntuaciones;
+	}
+
+	public void addPuntuacion(Reacciones reaccion) {
+		this.puntuaciones.add(reaccion);
+	}
+	
 	public Date getFechaCreacion() {
 		return fechaCreacion;
 	}
@@ -101,14 +109,10 @@ public class Opinion {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public ArrayList<Float> getPuntuaciones() {
-		
-		return puntuaciones;
+	@Override
+	public String toString() {
+		return "Opinion [puntuaciones=" + puntuaciones + "]";
 	}
 
-	public void setPuntuaciones(float puntuaciones) {
-		this.puntuaciones.add(puntuaciones);
-	}
-	
 	
 }

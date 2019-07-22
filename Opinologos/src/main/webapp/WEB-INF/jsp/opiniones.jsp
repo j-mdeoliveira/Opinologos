@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,11 +31,16 @@
 					</h5>
     				<p class="card-text">${op.detalle} </p>
     				<p class="card-text">Escrita por: ${op.user.userName} </p>
-    				<c:if test="${isNaN}">
+    				<c:if test="${noPuntuacion}">
     					No tiene puntuacion todavia.
     				</c:if>
-    				<p class="card-text">Puntuacion promedio: ${puntuacion} </p>
+    				<c:if test="${!noPuntuacion}">
+    					<p class="card-text">Puntuacion promedio: ${op.reacciones} </p>
+    				</c:if>  		
     				
+    				<sec:authorize access="hasAuthority('MODERADOR')">
+						<label><input type="checkbox" id="bloquear" name="bloquear" value="first_checkbox">Bloquear opinion</label><br>
+					</sec:authorize>		
 
 					<button type="submit" class="btn btn-block btn-primary" class="form-submit">MG</button>    				
 					<c:if test="${op.blockeada}">

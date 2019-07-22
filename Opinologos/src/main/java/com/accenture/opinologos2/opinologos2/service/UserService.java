@@ -3,6 +3,8 @@ package com.accenture.opinologos2.opinologos2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +43,20 @@ public class UserService {
 		}
 		
 		public User findByUserNameAndPassword(String userName, String password) {
-			String pass = passEncoder.encode(password);
-			
+			String pass = passEncoder.encode(password);			
 			System.out.println(userName + pass);
 			return userRepo.findByUserNameAndPassword(userName, pass);
 			
-			
 		}
+		
+		public User getLoggedUser() {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			if(currentPrincipalName != null) {
+				return userRepo.findByUserNameIgnoreCase(currentPrincipalName);
+			}
+			return null;
+		}
+		
 
 	}
